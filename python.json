@@ -1,0 +1,231 @@
+{
+	"pwnlib.pwn": {
+	"prefix": "pwn*",
+	"body": [
+		"from pwn import *",
+		"from Libcsearcher import *",
+		"context(arch='',os='linux',log_level = 'debug')",
+		"elf = ELF('./pwn')",
+		"p = process('./pwn')",
+		"libc = ELF()",
+		"",
+		"gdb = lambda        :gdb.attach(p)",
+		"s = lambda data : p.send(data)",
+		"sa  = lambda text,data  :p.sendafter(text, data)",
+		"sl  = lambda data   :p.sendline(data)",
+		"sla = lambda text,data  :p.sendlineafter(text, data)",
+		"r   = lambda num=4096   :p.recv(num)",
+		"rl  = lambda text   :p.recvuntil(text)",
+		"pr = lambda num=4096 :print(p.recv(num))",
+		"inter   = lambda        :p.interactive()",
+		"l32 = lambda    :u32(p.recvuntil(b'\\xf7')[-4:].ljust(4,b'\\x00'))",
+		"l64 = lambda    :u64(p.recvuntil(b'\\x7f')[-6:].ljust(8,b'\\x00'))",
+		"uu32    = lambda    :u32(p.recv(4).ljust(4,b'\\x00'))",
+		"uu64    = lambda    :u64(p.recv(6).ljust(8,b'\\x00'))",
+		"int16   = lambda data   :int(data,16)",
+		"lg= lambda s, num   :p.success('%s -> 0x%x' % (s, num))",
+		"csu = lambda rdi, rsi, rdx, rip, gadget: p64(gadget) + p64(0) + p64(1) + p64(rip) + p64(rdi) + p64(rsi) + p64(rdx) + p64(gadget - 0x1a)",
+		"def get_sb() : return libc_base + libc.sym['system'], libc_base + next(libc.search(b'/bin/sh\\x00'))",
+		"",
+		"# = elf.sym['']",
+		"",
+		"$1"
+	]
+	},
+	"pwnlib.remote.remote": {
+	"prefix": "remote",
+	"body": [
+		"remote($1)"
+	]
+	},
+	"pwnlib.process.process": {
+	"prefix": "process",
+	"body": [
+		"process('$1')"
+	]
+	},
+	"pwnlib.tubes.tube.send": {
+	"prefix": "send",
+	"body": [
+		"send($1)"
+	]
+	},
+	"pwnlib.tubes.tube.sendline": {
+	"prefix": "sendline",
+	"body": [
+		"sendline($1)"
+	]
+	},
+	"pwnlib.tubes.tube.recv": {
+	"prefix": "recv",
+	"body": [
+		"recv($1)"
+	]
+	},
+	"pwnlib.tubes.tube.recvline": {
+	"prefix": "recvline",
+	"body": [
+		"recvline($1)"
+	]
+	},
+	"pwnlib.tubes.tube.recvuntil": {
+	"prefix": "recvuntil",
+	"body": [
+		"recvuntil($1)"
+	]
+	},
+	"pwnlib.tubes.tube.recvuntil32": {
+	"prefix": "recvuntil('\\xf7')[-4:]",
+	"body": [
+		"recvuntil('\\xf7')[-4:]"
+	]
+	},
+	"pwnlib.tubes.tube.recvuntil64": {
+	"prefix": "recvuntil('\\x7f')[-6:].ljust(8,'\\x00')",
+	"body": [
+		"recvuntil('\\x7f')[-6:].ljust(8,'\\x00')"
+	]
+	},
+	"pwnlib.tubes.tube.interactive": {
+	"prefix": "interactive",
+	"body": [
+		"interactive()"
+	]
+	},
+	"pwnlib.util.packing.p8": {
+	"prefix": "p8",
+	"body": [
+		"p8($1)"
+	]
+	},
+	"pwnlib.util.packing.p16": {
+	"prefix": "p16",
+	"body": [
+		"p16($1)"
+	]
+	},
+	"pwnlib.util.packing.p32": {
+	"prefix": "p32",
+	"body": [
+		"p32($1)"
+	]
+	},
+	"pwnlib.util.packing.p64": {
+	"prefix": "p64",
+	"body": [
+		"p64($1)"
+	]
+	},
+	"pwnlib.util.packing.u8": {
+	"prefix": "u8",
+	"body": [
+		"u8($1)"
+	]
+	},
+	"pwnlib.util.packing.u16": {
+	"prefix": "u16",
+	"body": [
+		"u16($1)"
+	]
+	},
+	"pwnlib.util.packing.u32": {
+	"prefix": "u32",
+	"body": [
+		"u32($1)"
+	]
+	},
+	"pwnlib.util.packing.u64": {
+	"prefix": "u64",
+	"body": [
+		"u64($1)"
+	]
+	},
+	"pwnlib.asm.asm": {
+	"prefix": "asm",
+	"body": [
+		"asm(\"$1\")"
+	]
+	},
+	"pwnlib.shellcraft": {
+	"prefix": "shellcraft",
+	"body": [
+		"shellcraft"
+	]
+	},
+	"pwnlib.shellcraft.open": {
+	"prefix": "shellcraft.open",
+	"body": [
+		"shellcraft.open(\"$1\")"
+	]
+	},
+	"pwnlib.shellcraft.read": {
+	"prefix": "shellcraft.read",
+	"body": [
+		"shellcraft.read($1,,)"
+	]
+	},
+	"pwnlib.shellcraft.write": {
+	"prefix": "shellcraft.write",
+	"body": [
+		"shellcraft.write($1,,)"
+	]
+	},
+	"payload": {
+	"prefix": "payload",
+	"body": [
+		"payload"
+	]
+	},
+	"shellcode": {
+	"prefix": "shellcode",
+	"body": [
+		"shellcode"
+	]
+	},
+	"ljust": {
+	"prefix": "ljust()",
+	"body": [
+		"ljust($1)"
+	]
+	},
+	"rjust": {
+	"prefix": "rjust",
+	"body": [
+		"rjust($1)"
+	]
+	},
+	"cyclic": {
+	"prefix": "cyclic",
+	"body": [
+		"cyclic($1)"
+	]
+	},
+	"bin_sh": {
+	"prefix": "bin_sh",
+	"body": [
+		"bin_sh"
+	]
+	},
+	"system": {
+	"prefix": "system",
+	"body": [
+		"system"
+	]
+	},
+	"one_gadget": {
+	"prefix": "one_gadget",
+	"body": [
+		"one_gadget"
+	]
+	},
+	"LibcSearcher_payload": {
+	"prefix": "LibcSearcher*",
+	"body": [
+		"libc = LibcSearcher('',)",
+		"libc_base =  - libc.dump('')",
+		"system = libc_base + libc.dump('system')",
+		"bin_sh = libc_base + libc.dump('str_bin_sh')"
+	]
+	},
+}
+
